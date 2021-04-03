@@ -12,7 +12,7 @@ const server = http.createServer((req, res) => {
 
   switch (urlObj.pathname) {
     case "/hello":
-      res.end(`Hello${urlObj?.query?.name ? `, ${urlObj.query.name}` : 'World'}`);
+      res.end(`Hello ${urlObj?.query?.name ? `, ${urlObj.query.name}` : 'World'}`);
       break
     case "/goodbye":
       res.end(`Goodbye${urlObj?.query?.name ? `, ${urlObj.query.name}` : ''}`);
