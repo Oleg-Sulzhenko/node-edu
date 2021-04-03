@@ -15,7 +15,7 @@ const server = http.createServer((req, res) => {
       res.end(`Hello ${urlObj?.query?.name ? `, ${urlObj.query.name}` : 'World'}`);
       break
     case "/goodbye":
-      res.end(`Goodbye${urlObj?.query?.name ? `, ${urlObj.query.name}` : ''}`);
+      res.end(`Goodbye ${urlObj?.query?.name ? `, ${urlObj.query.name}` : ''}`);
       break
     default:
       res.statusCode = 404;
