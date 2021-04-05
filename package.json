@@ -1,0 +1,24 @@
+{
+  "name": "node-edu",
+  "version": "0.0.1",
+  "description": "Education",
+  "main": "index.js",
+  "dependencies": {
+    "nodemon": "^2.0.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index -inspect"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Oleg-Sulzhenko/node-edu.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Oleg-Sulzhenko/node-edu/issues"
+  },
+  "homepage": "https://github.com/Oleg-Sulzhenko/node-edu#readme"
+}

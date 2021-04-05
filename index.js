@@ -1,24 +1,29 @@
 const http = require('http');
-const url = require('url');
 
 const hostname = '127.0.0.1';
 const port = 3000;
 
 const server = http.createServer((req, res) => {
-  res.statusCode = 200;
   res.setHeader('Content-Type', 'text/plain');
+  
+  const urlObj = new URL(req.url, `http://${req.headers.host}`);
+  const paramsName = urlObj.searchParams.get('name');
 
-  const urlObj = url.parse(req.url, true);
-
-  switch (urlObj.pathname) {
-    case "/hello":
-      res.end(`Hello ${urlObj?.query?.name ? `, ${urlObj.query.name}` : 'World'}`);
-      break
-    case "/goodbye":
-      res.end(`Goodbye ${urlObj?.query?.name ? `, ${urlObj.query.name}` : ''}`);
-      break
-    default:
-      res.statusCode = 404;
+  if(req.method === "GET") {
+    switch (urlObj.pathname) {
+      case "/hello":
+        res.statusCode = 200;
+        res.end(`Hello ${paramsName ? `, ${paramsName}` : 'World'}`);
+        break
+      case "/goodbye":
+        res.statusCode = 200;
+        res.end(`Goodbye ${paramsName ? `, ${paramsName}` : ''}`);
+        break
+      case "/":
+        res.statusCode = 404;
+        res.end();
+        break
+    }
   }
 
 });
