@@ -42,7 +42,7 @@ const ProfileSchema = new mongoose.Schema({
         type: String
       },
       from: {
-        type: Date,
+        type: mongoose.Schema.Types.Mixed,
         required: true
       },
       to: {
