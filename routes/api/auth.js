@@ -29,7 +29,6 @@ router.post('/', [
   body('password', "Password is required").isLength({ min: 6 }),
 ],
 async (req, res) => {
-  console.log('POST api/auth req.body :>> ', req.body);
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -66,7 +65,7 @@ async (req, res) => {
     ); 
 
   } catch(err) {
-    console.log('err.message :>> ', err.message);
+    console.error(err.message);
     res.status(500).send('Server Error');
   }
   
