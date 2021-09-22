@@ -1,18 +1,30 @@
 import React, { Fragment } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 
 import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
 
+import Login from './components/auth/Login';
+import Register from './components/auth/Register';
+
 import './App.css';
 
 const App = () => (
-  <Fragment>
-    <Navbar/>
-    <Landing/>
-    <FontAwesomeIcon icon={faCoffee} />
-  </Fragment>
+  <Router>
+    <Fragment>
+      <Navbar/>
+      <FontAwesomeIcon icon={faCoffee} />
+      <Route exact path='/' component={Landing}/>
+      <section className="container">
+        <Switch>
+          <Route exact path='/register' component={Register}/>
+          <Route exact path='/login' component={Login}/>
+        </Switch>
+      </section>
+    </Fragment>
+  </Router>
 );
 
 export default App;
