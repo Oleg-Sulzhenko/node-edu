@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from './authApiActions';
+
 export const Login = () => {
+
+  const dispatch = useDispatch();
+  const { auth } = useSelector(state=>state);
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -12,13 +19,13 @@ export const Login = () => {
 
   const onSubmit = e => {
     e.preventDefault();
-    console.log('onSubmit Login :>> ', formData);
+    dispatch(loginUser(formData));
   }
 
   return (
     <>
       <h1 className="large text-primary">Sign In</h1>
-      <p className="lead"><i className="fas fa-user"></i> Sign to Your Account</p>
+      <p className="lead"><i className="fas fa-user"></i> Sign to Your Account {auth.isLogged && 'ALEG'}</p>
       <form className="form" action="create-profile.html" onSubmit={e => onSubmit(e)}>
         <div className="form-group">
           <input 
