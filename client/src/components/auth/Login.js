@@ -1,31 +1,37 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
-import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from './authApiActions';
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { authenticateUser } from './authApiThunks';
+import { getUser } from '../../utils/helpers';
 
 export const Login = () => {
-
+  const history = useHistory();
   const dispatch = useDispatch();
-  const { auth } = useSelector(state=>state);
 
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     email: '',
     password: '',
-  });
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
   const { email, password } = formData; 
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = e => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    dispatch(loginUser(formData));
+    await dispatch(authenticateUser(formData));
+    await getUser();
+
+    history.push("/dashboard");
+    setFormData(initialFormData);
   }
 
   return (
     <>
       <h1 className="large text-primary">Sign In</h1>
-      <p className="lead"><i className="fas fa-user"></i> Sign to Your Account {auth.isLogged && 'ALEG'}</p>
+      <p className="lead"><i className="fas fa-user"></i> Sign to Your Account</p>
       <form className="form" action="create-profile.html" onSubmit={e => onSubmit(e)}>
         <div className="form-group">
           <input 

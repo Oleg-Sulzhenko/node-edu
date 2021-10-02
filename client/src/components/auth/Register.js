@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { registerUser } from './authApiThunks';
 
 export const Register = () => {
-  const [formData, setFormData] = useState({
+  const dispatch = useDispatch();
+  const initialFormData = {
     name: '',
     email: '',
     password: '',
     password2: '',
-  });
+  };
+  const [formData, setFormData] = useState(initialFormData);
   const { name, email, password, password2 } = formData; 
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -17,7 +21,8 @@ export const Register = () => {
     if (password !== password2) {
       console.log('password do not match :>> ');
     } else {
-      console.log('formdata :>> ', formData);
+      dispatch(registerUser({ name, email, password }));
+      setFormData(initialFormData);
     }
   }
 
@@ -71,7 +76,7 @@ export const Register = () => {
         <input type="submit" className="btn btn-primary" value="Register" />
       </form>
       <p className="my-1">
-        Already have an account? <Link TO="/login">Sign In</Link>
+        Already have an account? <Link to="/login">Sign In</Link>
       </p>
     </>
   )

@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from "react-redux";
 
 export const Landing = () => {
+  const { auth } = useSelector(state=>state);
+
   return (
     <section className="landing">
       <div className="dark-overlay">
@@ -11,10 +14,10 @@ export const Landing = () => {
             Create a developer profile/portfolio, share posts and get help from
             other developers
           </p>
-          <div className="buttons">
+          {!auth.isAuthenticated && <div className="buttons">
             <Link to="/register" className="btn btn-primary">Sign Up</Link>
             <Link to="/login" className="btn btn-light">Login</Link>
-          </div>
+          </div>}
         </div>
       </div>
     </section>
