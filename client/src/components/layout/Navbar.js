@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { onLogout } from '../auth/authSlice';
+import { clearProfile } from '../dashboard/profile/profileSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
 
@@ -11,6 +12,7 @@ export const Navbar = () => {
 
   const logout =() => {
     dispatch(onLogout());
+    dispatch(clearProfile());
   }
 
   return (
@@ -19,6 +21,7 @@ export const Navbar = () => {
         <Link to="/"><i className="fas fa-code"></i> DevConnector</Link>
       </h1>
       <ul>
+        {isAuthenticated && <li><Link to="dashboard">Dashboard</Link></li>}
         <li><Link to="profiles">Developers</Link></li>
         {!isAuthenticated ? <>
           <li><Link to="register">Register</Link></li>

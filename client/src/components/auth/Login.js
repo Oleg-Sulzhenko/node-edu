@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { authenticateUser } from './authApiThunks';
+import { Link, Redirect, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { authenticateUser } from './authSlice';
 import { getUser } from '../../utils/helpers';
 
 export const Login = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const { auth: { isAuthenticated } } = useSelector(state=>state);
 
   const initialFormData = {
     email: '',
@@ -28,10 +28,12 @@ export const Login = () => {
     setFormData(initialFormData);
   }
 
+  if (isAuthenticated) return <Redirect to="/dashboard" />
+
   return (
     <>
       <h1 className="large text-primary">Sign In</h1>
-      <p className="lead"><i className="fas fa-user"></i> Sign to Your Account</p>
+      <p className="lead"><i className="fas fa-user"></i> Sign to Your Account - passwordForAll</p>
       <form className="form" action="create-profile.html" onSubmit={e => onSubmit(e)}>
         <div className="form-group">
           <input 
@@ -55,7 +57,7 @@ export const Login = () => {
             onChange={e => onChange(e)}
           />
         </div>
-        <input type="submit" className="btn btn-primary" value="Register" />
+        <input type="submit" className="btn btn-primary" value="Sign In" />
       </form>
       <p className="my-1">
         Already have an account? <Link to="/login">Sign In</Link>

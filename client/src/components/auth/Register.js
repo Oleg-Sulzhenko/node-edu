@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch } from "react-redux";
-import { registerUser } from './authApiThunks';
+import { registerUser } from './authSlice';
+import { getUser } from '../../utils/helpers';
 
 export const Register = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const initialFormData = {
     name: '',
@@ -16,13 +18,23 @@ export const Register = () => {
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = e => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     if (password !== password2) {
       console.log('password do not match :>> ');
     } else {
-      dispatch(registerUser({ name, email, password }));
-      setFormData(initialFormData);
+
+      await dispatch(registerUser({ name, email, password })).then((response) => {
+        if(response.error) {
+          console.log('response :>> ', response.meta.response.statusText);
+        } else {
+          getUser();
+
+          history.push("/dashboard");
+          setFormData(initialFormData);
+        }
+      });
+      
     }
   }
 
